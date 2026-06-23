@@ -18,6 +18,15 @@ export function LandingNav() {
         <Link href="/pricing" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
           Pricing
         </Link>
+        <Link href="/#features" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors hidden sm:inline">
+          Features
+        </Link>
+        <Link href="/#geo-guide" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors hidden md:inline">
+          Guide
+        </Link>
+        <Link href="/#faq" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors hidden sm:inline">
+          FAQ
+        </Link>
         <ThemeToggle />
         <Link href="/login" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
           Login
