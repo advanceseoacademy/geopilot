@@ -1,6 +1,7 @@
 "use server";
 
 import { db } from "@/lib/db";
+import type { Prisma } from "@prisma/client";
 import { crawlSite } from "@/lib/geo/crawler";
 import { runFullAnalysis } from "@/lib/geo/analyze";
 import { buildReportSummary } from "@/lib/geo/recommendations";
@@ -98,7 +99,7 @@ export async function runGeoAudit(url: string, projectId: string, userId?: strin
 
     await updateProgress(audit.id, 95, "Saving results...");
 
-    await db.$transaction(async (tx) => {
+    await db.$transaction(async (tx: Prisma.TransactionClient) => {
       await tx.audit.update({
         where: { id: audit.id },
         data: {
