@@ -1,8 +1,8 @@
+import { getSiteUrl } from "@/lib/site-url";
+
 export const siteName = "GeoPilot";
 
-export function getSiteUrl() {
-  return (process.env.NEXT_PUBLIC_APP_URL || "https://geopilot.vercel.app").replace(/\/$/, "");
-}
+export { getSiteUrl };
 
 export const landingFaqs = [
   {
