@@ -12,8 +12,8 @@ interface ApiKeyRow {
   name: string;
   keyPrefix: string;
   team: { name: string } | null;
-  lastUsed: Date | null;
-  createdAt: Date;
+  lastUsed: string | null;
+  createdAt: string;
 }
 
 export function ApiKeyManager({ keys }: { keys: ApiKeyRow[] }) {
