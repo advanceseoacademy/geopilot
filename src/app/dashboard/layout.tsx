@@ -1,12 +1,31 @@
 import { Suspense } from "react";
+import type { Metadata } from "next";
 import Link from "next/link";
+import dynamic from "next/dynamic";
 import { redirect } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { LogoutButton } from "@/components/LogoutButton";
-import { ThemeToggle } from "@/components/ThemeToggle";
-import { NotificationBell } from "@/components/NotificationBell";
 import { DashboardPageSkeleton } from "@/components/DashboardPageSkeleton";
 import { getSession } from "@/lib/session";
+
+const NotificationBell = dynamic(
+  () => import("@/components/NotificationBell").then((m) => ({ default: m.NotificationBell })),
+  { loading: () => <div className="w-9 h-9" aria-hidden /> }
+);
+
+const ThemeToggle = dynamic(
+  () => import("@/components/ThemeToggle").then((m) => ({ default: m.ThemeToggle })),
+  { loading: () => <div className="w-9 h-9" aria-hidden /> }
+);
+
+const LogoutButton = dynamic(
+  () => import("@/components/LogoutButton").then((m) => ({ default: m.LogoutButton })),
+  { loading: () => <div className="w-16 h-9" aria-hidden /> }
+);
+
+export const metadata: Metadata = {
+  title: "Dashboard",
+  robots: { index: false, follow: false },
+};
 
 export default async function DashboardLayout({ children }: { children: React.ReactNode }) {
   const session = await getSession();

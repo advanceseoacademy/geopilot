@@ -1,15 +1,27 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import dynamic from "next/dynamic";
 import { Button } from "@/components/ui/button";
-import { LandingNav } from "@/components/LandingNav";
-import { HomeMarketing } from "@/components/landing/HomeMarketing";
 import { HomeJsonLd } from "@/components/landing/HomeJsonLd";
-import { getSiteUrl } from "@/lib/seo/landing-content";
+import { getSiteUrl } from "@/lib/site-url";
+
+const LandingNav = dynamic(
+  () => import("@/components/LandingNav").then((m) => ({ default: m.LandingNav })),
+  { loading: () => <nav className="h-[72px] max-w-7xl mx-auto" aria-hidden /> }
+);
+
+const HomeMarketing = dynamic(
+  () => import("@/components/landing/HomeMarketing").then((m) => ({ default: m.HomeMarketing })),
+  { loading: () => <div className="h-96 animate-pulse bg-zinc-900/20 mx-6 rounded-2xl" aria-hidden /> }
+);
 
 const siteUrl = getSiteUrl();
 
+/** ISR: regenerate landing page every hour */
+export const revalidate = 3600;
+
 export const metadata: Metadata = {
-  title: "GeoPilot — #1 Generative Engine Optimization (GEO) Audit Tool",
+  title: "#1 Generative Engine Optimization (GEO) Audit Tool",
   description:
     "Analyze your website for AI search readiness. Free GEO audit tool with entity analysis, E-E-A-T scoring, AI bot access checks, and PDF reports. Optimize for ChatGPT, Perplexity & Google AI Overviews.",
   keywords: [
@@ -46,10 +58,6 @@ export const metadata: Metadata = {
   },
   alternates: {
     canonical: siteUrl,
-  },
-  robots: {
-    index: true,
-    follow: true,
   },
 };
 

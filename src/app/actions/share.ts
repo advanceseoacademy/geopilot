@@ -28,15 +28,6 @@ export async function createShareLink(auditId: string) {
 }
 
 export async function getSharedAudit(token: string) {
-  return db.sharedAudit.findUnique({
-    where: { token },
-    include: {
-      audit: {
-        include: {
-          entities: { orderBy: { count: "desc" }, take: 20 },
-          topics: true,
-        },
-      },
-    },
-  });
+  const { getCachedSharedAudit } = await import("@/lib/share-cache");
+  return getCachedSharedAudit(token);
 }

@@ -1,11 +1,32 @@
-import { getSharedAudit } from "@/app/actions/share";
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { getCachedSharedAudit } from "@/lib/share-cache";
 import { TotalScoreHero } from "@/components/TotalScoreHero";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
+/** ISR: shared reports revalidate every 5 minutes */
+export const revalidate = 300;
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ token: string }>;
+}): Promise<Metadata> {
+  const { token } = await params;
+  const shared = await getCachedSharedAudit(token);
+  if (!shared) return { title: "Report Not Found" };
+
+  const title = shared.audit.title || "GEO Audit Report";
+  return {
+    title: `${title} — Shared Report`,
+    description: `GEO score ${shared.audit.geoScore ?? "—"}/100 for ${shared.audit.url}`,
+    robots: { index: false, follow: false },
+  };
+}
+
 export default async function PublicSharePage({ params }: { params: Promise<{ token: string }> }) {
   const { token } = await params;
-  const shared = await getSharedAudit(token);
+  const shared = await getCachedSharedAudit(token);
   if (!shared) return notFound();
 
   const audit = shared.audit;

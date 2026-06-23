@@ -9,13 +9,21 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { TotalScoreHero } from "@/components/TotalScoreHero";
 import { RecommendationsList, ScoreBreakdown } from "@/components/AuditReport";
-import { PrintButton } from "@/components/PrintButton";
-import { ShareButton } from "@/components/ShareButton";
 import { getBenchmarkComparison } from "@/lib/geo/benchmarks";
 
 const EntityGraph = dynamic(
   () => import("@/components/EntityGraph").then((m) => m.EntityGraph),
   { loading: () => <div className="h-[200px] animate-pulse bg-zinc-800/50 rounded-xl" /> }
+);
+
+const PrintButton = dynamic(
+  () => import("@/components/PrintButton").then((m) => m.PrintButton),
+  { loading: () => <div className="h-9 w-24 animate-pulse bg-zinc-800 rounded-md" /> }
+);
+
+const ShareButton = dynamic(
+  () => import("@/components/ShareButton").then((m) => m.ShareButton),
+  { loading: () => <div className="h-9 w-24 animate-pulse bg-zinc-800 rounded-md" /> }
 );
 
 export default async function AuditDetailsPage({ params }: { params: Promise<{ id: string }> }) {

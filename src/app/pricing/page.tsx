@@ -1,7 +1,26 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
+import { getSiteUrl } from "@/lib/site-url";
+
+const siteUrl = getSiteUrl();
+
+/** ISR: pricing page cached for 24 hours */
+export const revalidate = 86400;
+
+export const metadata: Metadata = {
+  title: "Pricing",
+  description:
+    "Simple, transparent GEO audit pricing. Free tier with 5 audits/month. Pro and Enterprise plans for teams and agencies. No paid APIs, no hidden costs.",
+  alternates: { canonical: `${siteUrl}/pricing` },
+  openGraph: {
+    title: "GeoPilot Pricing — GEO Audit Plans",
+    description: "Free GEO audits, Pro unlimited plans, and Enterprise for agencies. No paid external APIs.",
+    url: `${siteUrl}/pricing`,
+  },
+};
 
 const plans = [
   {
@@ -40,7 +59,7 @@ export default function PricingPage() {
   return (
     <div className="min-h-screen bg-background">
       <nav className="flex items-center justify-between p-6 max-w-7xl w-full mx-auto">
-        <Link href="/" className="flex items-center gap-2">
+        <Link href="/" prefetch className="flex items-center gap-2">
           <div className="w-8 h-8 rounded bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center">
             <span className="text-white font-bold tracking-tighter text-xs">GP</span>
           </div>
@@ -81,7 +100,7 @@ export default function PricingPage() {
                 <ul className="space-y-2">
                   {plan.features.map((f) => (
                     <li key={f} className="flex items-center gap-2 text-sm text-zinc-300">
-                      <svg className="w-4 h-4 text-purple-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <svg className="w-4 h-4 text-purple-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden>
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                       </svg>
                       {f}

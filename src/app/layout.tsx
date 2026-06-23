@@ -1,23 +1,24 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import { siteMetadata } from "@/lib/metadata";
 import "./globals.css";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
+  display: "swap",
+  preload: true,
 });
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+  display: "swap",
+  preload: false,
 });
 
-export const metadata: Metadata = {
-  title: "GeoPilot — Generative Engine Optimization Platform",
-  description: "Analyze any website for AI search readiness. GEO scores, entity analysis, E-E-A-T validation, and actionable recommendations — no paid APIs.",
-  keywords: ["GEO", "Generative Engine Optimization", "AI SEO", "Answer Engine Optimization"],
-};
+export const metadata: Metadata = siteMetadata;
 
 export default function RootLayout({
   children,
