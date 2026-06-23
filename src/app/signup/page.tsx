@@ -33,8 +33,8 @@ export default function SignUpPage() {
     if (error) {
       setError(error.message || "Failed to sign up");
     } else {
-      // Redirect to dashboard on successful signup
-      router.push("/dashboard");
+      router.refresh();
+      window.location.href = "/dashboard";
     }
   };
 
